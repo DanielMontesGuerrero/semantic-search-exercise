@@ -1,7 +1,8 @@
 from utils import load_data, search
-from sentence_transformers import SentenceTransformer, util
+from sentence_transformers import SentenceTransformer
 
 model = SentenceTransformer('all-MiniLM-L6-v2')
+
 
 def loop(sentences, embedings, metadata):
     try:
@@ -18,6 +19,7 @@ def loop(sentences, embedings, metadata):
     except KeyboardInterrupt:
         print("\nBye :)")
 
+
 def main():
     print("Loading data...")
     sentences, metadata = load_data()
@@ -25,6 +27,7 @@ def main():
     embedings = model.encode(sentences, convert_to_tensor=True)
     print("Ready to answer queries")
     loop(sentences, embedings, metadata)
+
 
 if __name__ == '__main__':
     main()

@@ -9,6 +9,7 @@ from sentence_transformers import util
 DATA_PATH = ''
 TOP_SCORES_LIMIT = 0
 
+
 def load_config():
     global DATA_PATH
     global TOP_SCORES_LIMIT
@@ -16,6 +17,7 @@ def load_config():
         data = json.load(file)
         DATA_PATH = data["dataPath"]
         TOP_SCORES_LIMIT = data["topScoresLimit"]
+
 
 def get_sentences_from_text(text: str) -> list[str]:
     text = text.replace('\n', ' ')
@@ -26,12 +28,14 @@ def get_sentences_from_text(text: str) -> list[str]:
             filtered_sentences.append(sentence)
     return filtered_sentences
 
+
 def get_sentences_from_txt(dirpath: str, filename: str) -> str:
     with open(f'{dirpath}/{filename}') as file:
         raw_text = ''
         for line in file.readlines():
             raw_text += line
         return raw_text
+
 
 def get_sentences_from_file(dirpath: str, filename: str, file_ext: str) -> str:
     with open(f'{dirpath}/{filename}', 'rb') as file:
@@ -47,6 +51,7 @@ def get_sentences_from_file(dirpath: str, filename: str, file_ext: str) -> str:
                 raw_text += paragraph.text
         return raw_text
 
+
 def load_data_from_file(dirpath: str, filename: str) -> list[str]:
     file_ext = filename.split('.')[-1]
     raw_text = []
@@ -55,6 +60,7 @@ def load_data_from_file(dirpath: str, filename: str) -> list[str]:
     else:
         raw_text = get_sentences_from_file(dirpath, filename, file_ext)
     return get_sentences_from_text(raw_text)
+
 
 def load_data() -> tuple[list[str], dict]:
     load_config()
@@ -71,6 +77,7 @@ def load_data() -> tuple[list[str], dict]:
                             'filename': filename,
                         }
     return data, metadata
+
 
 def search(model, embedings, input_sentence):
     input_embedings = model.encode([input_sentence], convert_to_tensor=True)
